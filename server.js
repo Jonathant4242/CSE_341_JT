@@ -1,11 +1,36 @@
-const express = require('express');
-const app = express();
-const port = 3000;
+require('dotenv').config(); // Load environment variables
 
+const express = require('express');
+const mongoose = require('mongoose');
+const app = express();
+
+const PORT = process.env.PORT || 8080;
+
+// Connect to MongoDB
+mongoose.connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
+.then(() => console.log('Connected to MongoDB'))
+.catch(err => console.error('MongoDB connection error:', err));
+
+// Root route
 app.get('/', (req, res) => {
-  res.send('Hello, John!');
+    res.send('Hello, John!');
 });
 
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
+// API route
+app.get('/api/data', (req, res) => {
+    res.json({
+        message: "This is a test response",
+        data: [
+            { id: 1, name: "Item 1" },
+            { id: 2, name: "Item 2" }
+        ]
+    });
+});
+
+// Start the server
+app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
 });
