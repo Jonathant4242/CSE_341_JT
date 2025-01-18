@@ -1,0 +1,39 @@
+### Test the Root Route
+GET http://localhost:8080/
+
+### Test Get All Contacts
+GET http://localhost:8080/contacts
+
+### Test Get a Specific Contact by ID
+GET http://localhost:8080/contacts/678c0f7e8e53879c1e3313e2
+
+### Test Create a New Contact
+POST http://localhost:8080/contacts
+Content-Type: application/json
+
+{
+    "firstName": "Jose",
+    "lastName": "Don",
+    "email": "j.don@example.com",
+    "favoriteColor": "Yellow",
+    "birthday": "01/01/1990",
+    "phone": "+11234567890",
+    "tags": ["friend", "family"]
+}
+
+### Test Update a Contact by ID
+PUT http://localhost:8080/contacts/678c0f7e8e53879c1e3313e2
+Content-Type: application/json
+
+{
+    "firstName": "Updated",
+    "lastName": "Contact",
+    "email": "updated.contact@example.com",
+    "favoriteColor": "Red",
+    "birthday": "02/02/2000",
+    "phone": "+9876543210",
+    "tags": ["work", "family"]
+}
+
+### Test Delete a Contact by ID
+DELETE http://localhost:8080/contacts/678c0f7e8e53879c1e3313e2
