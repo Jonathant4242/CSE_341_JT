@@ -3,6 +3,13 @@ require('dotenv').config(); // Load environment variables
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
+const contactsRoutes = require('./routes/contacts');
+
+// Middleware to parse JSON requests
+app.use(express.json());
+
+// Route for contacts
+app.use('/contacts', contactsRoutes);
 
 const PORT = process.env.PORT || 8080;
 
