@@ -16,7 +16,7 @@ Content-Type: application/json
     "lastName": "Don",
     "email": "j.don@example.com",
     "favoriteColor": "Yellow",
-    "birthday": "01/01/1990",
+    "birthday": "1990-01-01",
     "phone": "+11234567890",
     "tags": ["friend", "family"]
 }
