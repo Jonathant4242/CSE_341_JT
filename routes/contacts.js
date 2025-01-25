@@ -54,13 +54,33 @@ router.put('/:id', async (req, res) => {
 
 // Delete a contact by ID
 router.delete('/:id', async (req, res) => {
+    // Validate the ID format before proceeding
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).json({ error: 'Invalid contact ID format' });
+    }
+
     try {
-        const deletedContact = await Contact.findByIdAndDelete(req.params.id); // Delete contact
+        // Log the ID being deleted for debugging
+        console.log(`Attempting to delete contact with ID: ${req.params.id}`);
+
+        // Attempt to delete the contact using the ID from the URL
+        const deletedContact = await Contact.findByIdAndDelete(req.params.id);
+
+        // If no contact is found, return a 404 status with an error message
         if (!deletedContact) {
             return res.status(404).json({ error: 'Contact not found' });
         }
+
+        // Log successful deletion for debugging
+        console.log(`Successfully deleted contact with ID: ${req.params.id}`);
+
+        // On successful deletion, return a 200 status with a success message and contact details
         res.status(200).json({ message: 'Contact deleted', contact: deletedContact });
     } catch (err) {
+        // Log the error for debugging
+        console.error(`Error deleting contact with ID: ${req.params.id}`, err);
+
+        // Handle invalid ID or other errors with a 400 status
         res.status(400).json({ error: 'Failed to delete contact', details: err.message });
     }
 });

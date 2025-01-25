@@ -12,7 +12,7 @@ POST http://localhost:8080/contacts
 Content-Type: application/json
 
 {
-    "firstName": "Jose",
+    "firstName": "ROBERT",
     "lastName": "Don",
     "email": "j.don@example.com",
     "favoriteColor": "Yellow",
@@ -36,4 +36,4 @@ Content-Type: application/json
 }
 
 ### Test Delete a Contact by ID
-DELETE http://localhost:8080/contacts/678c0f7e8e53879c1e3313e2
+DELETE http://localhost:8080/contacts/67956aaef3eb75817fdbe6a8
