@@ -2,6 +2,27 @@ const express = require('express');
 const Contact = require('../models/contacts'); // Import the Contact model
 const router = express.Router();
 const Joi = require('joi'); // Import Joi for validation
+const mongoose = require('mongoose'); // Import mongoose for ObjectId validation
+
+// route using mongoose
+router.get('/:id', async (req, res) => {
+    const { id } = req.params;
+
+    // Validate the ID
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).send('Invalid ID');
+    }
+
+    try {
+        const contact = await Contact.findById(id);
+        if (!contact) {
+            return res.status(404).send('Contact not found');
+        }
+        res.send(contact);
+    } catch (error) {
+        res.status(500).send('Server error');
+    }
+});
 
 // Get all contacts
 router.get('/', async (req, res) => {
@@ -15,11 +36,14 @@ router.get('/', async (req, res) => {
 });
 
 const contactUpdateSchema = Joi.object({
-    name: Joi.string().optional(),
-    email: Joi.string().email().optional(),
-    phone: Joi.string().optional(),
-    address: Joi.string().optional(),
-}).min(1); // Ensure at least one field is provided
+    firstName: Joi.string().optional(), // Allow firstName
+    lastName: Joi.string().optional(),  // Allow lastName
+    email: Joi.string().email().optional(), // Allow email
+    phone: Joi.string().optional(),    // Allow phone
+    favoriteColor: Joi.string().optional(), // Allow favoriteColor
+    birthday: Joi.date().optional(),   // Allow birthday
+    tags: Joi.array().items(Joi.string()).optional() // Allow tags array
+}).min(1); // Ensure at least one field is provided for update
 
 // Create a new contact
 router.post('/', async (req, res) => {
