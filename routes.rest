@@ -12,8 +12,8 @@ POST http://localhost:8080/contacts
 Content-Type: application/json
 
 {
-    "firstName": "lucy",
-    "lastName": "king",
+    "firstName": "James",
+    "lastName": "Queen",
     "email": "lucy.k@example.com",
     "favoriteColor": "brown",
     "birthday": "1990-01-01",
@@ -22,7 +22,7 @@ Content-Type: application/json
 }
 
 ### Test Update a Contact by ID
-PUT http://localhost:8080/contacts/6795730328880bfe57ffdc66
+PUT http://localhost:8080/contacts/67957fd5c7fa21b70428d85f
 Content-Type: application/json
 
 {
@@ -36,4 +36,4 @@ Content-Type: application/json
 }
 
 ### Test Delete a Contact by ID
-DELETE http://localhost:8080/contacts/6795730328880bfe57ffdc66
+DELETE http://localhost:8080/contacts/67957fd5c7fa21b70428d85f
