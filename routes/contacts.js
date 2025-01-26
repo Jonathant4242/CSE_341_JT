@@ -14,7 +14,6 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Validation schema for contact updates
 const contactUpdateSchema = Joi.object({
     name: Joi.string().optional(),
     email: Joi.string().email().optional(),
