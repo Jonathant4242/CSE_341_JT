@@ -1,16 +1,28 @@
 const mongoose = require('mongoose');
-const { Timestamp } = require('bson'); // Import Timestamp from bson
+
 
 // Define the schema for contacts
 const contactSchema = new mongoose.Schema({
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     email: { type: String, required: true },
-    favoriteColor: String,
-    birthday: String,
-    phone: String,
-    tags: [String],
-    createdAt: { type: Date, default: Date.now } // Use bson.Timestamp
+    favoriteColor: { type: String, required: false },
+    birthday: { type: Date, required: false }, // Changed to Date for consistency
+    phone: { type: String, required: false },
+    tags: { type: [String], required: false },
+    createdAt: { type: Date, default: Date.now }, // Automatically set on creation
+    lastModified: { type: Date, default: Date.now } // Automatically update on modification
+});
+
+// Middleware to automatically update the `lastModified` field
+contactSchema.pre('save', function (next) {
+    this.lastModified = Date.now();
+    next();
+});
+
+contactSchema.pre('findOneAndUpdate', function (next) {
+    this.set({ lastModified: Date.now() });
+    next();
 });
 
 // Create the model for contacts
