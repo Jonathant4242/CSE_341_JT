@@ -2,28 +2,36 @@ require('dotenv').config(); // Load environment variables
 
 const express = require('express');
 const mongoose = require('mongoose');
-const app = express();
+const fs = require('fs'); // File system module to read Swagger JSON
+const swaggerUi = require('swagger-ui-express'); // Swagger UI
 const contactsRoutes = require('./routes/contacts');
+
+const app = express();
+const PORT = process.env.PORT || 8080;
 
 // Middleware to parse JSON requests
 app.use(express.json());
 
-// Route for contacts
+// Load Swagger JSON manually
+const swaggerDocument = JSON.parse(fs.readFileSync('./swagger.json', 'utf-8'));
+
+// Setup Swagger UI at /api-docs
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+// API Routes
 app.use('/contacts', contactsRoutes);
 
-const PORT = process.env.PORT || 8080;
-
-// Connect to MongoDB
+// MongoDB Connection
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('Connected to MongoDB'))
     .catch(err => console.error('MongoDB connection error:', err));
 
-// Root route
+// Root Route
 app.get('/', (req, res) => {
     res.send('Hello, John!');
 });
 
-// API route
+// API Test Route
 app.get('/api/data', (req, res) => {
     res.json({
         message: "This is a test response",
@@ -34,7 +42,7 @@ app.get('/api/data', (req, res) => {
     });
 });
 
-// Start the server
+// Start the Server
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });
