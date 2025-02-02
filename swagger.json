@@ -9,7 +9,7 @@
     },
     "version": "1.0.0"
   },
-  "host": "localhost:8080",
+  "host": "cse-341-jt.onrender.com",
   "servers": [
     {
       "url": "https://cse-341-jt.onrender.com",
@@ -28,7 +28,7 @@
     }
   ],
   "schemes": [
-    "http"
+    "https"
   ],
   "paths": {
     "/": {

@@ -1,9 +1,8 @@
 require('dotenv').config(); // Load environment variables
-
 const express = require('express');
 const mongoose = require('mongoose');
-const fs = require('fs'); // File system module to read Swagger JSON
-const swaggerUi = require('swagger-ui-express'); // Swagger UI
+const fs = require('fs');
+const swaggerUi = require('swagger-ui-express');
 const contactsRoutes = require('./routes/contacts');
 
 const app = express();
@@ -12,10 +11,10 @@ const PORT = process.env.PORT || 8080;
 // Middleware to parse JSON requests
 app.use(express.json());
 
-// Load Swagger JSON manually
+// Swagger UI
 const swaggerDocument = JSON.parse(fs.readFileSync('./swagger.json', 'utf-8'));
 
-// Setup Swagger UI at /api-docs
+// Serve Swagger UI
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // API Routes

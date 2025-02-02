@@ -9,11 +9,9 @@ const doc = {
             email: "jonathan.trok@outlook.com"
         }
     },
-    host: process.env.NODE_ENV === "production" 
-        ? "cse-341-jt.onrender.com" 
-        : "localhost:8080",  
-    basePath: "/",  
-    schemes: process.env.NODE_ENV === "production" ? ["https"] : ["http"],  
+    host: "cse-341-jt.onrender.com", 
+    basePath: "/", 
+    schemes: ['https'],
     servers: [
         {
             url: "https://cse-341-jt.onrender.com",
@@ -32,17 +30,10 @@ const doc = {
     ]
 };
 
-// Output file
-const outputFile = "./swagger.json";
-const endpointsFiles = ["./server.js", "./routes/contacts.js"];  
+const outputFile = './swagger.json';
+const endpointsFiles = ['./server.js', './routes/contacts.js']; 
 
-// ✅ DELETE existing Swagger JSON before regenerating
-const fs = require("fs");
-if (fs.existsSync(outputFile)) {
-    fs.unlinkSync(outputFile);  // 🔥 No more `rm -f swagger.json`
-}
-
-// ✅ Generate Swagger JSON
+// Generate Swagger JSON
 swaggerAutogen(outputFile, endpointsFiles, doc).then(() => {
-    require("./server.js"); // Start the server AFTER generating Swagger
+    require('./server.js'); // Start server AFTER generating Swagger
 });
