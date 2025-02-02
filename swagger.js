@@ -9,9 +9,11 @@ const doc = {
             email: "jonathan.trok@outlook.com"
         }
     },
+    // host: "localhost:8080",
+    // basePath: "/",
     host: "cse-341-jt.onrender.com", 
-    basePath: "/", 
-    schemes: ['https'],
+    basePath: "/",
+    schemes: ['https'],  
     servers: [
         {
             url: "https://cse-341-jt.onrender.com",

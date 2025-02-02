@@ -4,9 +4,13 @@ const mongoose = require('mongoose');
 const fs = require('fs');
 const swaggerUi = require('swagger-ui-express');
 const contactsRoutes = require('./routes/contacts');
+const cors = require('cors'); // Import CORS middleware
 
 const app = express();
 const PORT = process.env.PORT || 8080;
+
+// Enable CORS for all requests
+app.use(cors());  // This must be placed before any route handlers
 
 // Middleware to parse JSON requests
 app.use(express.json());
