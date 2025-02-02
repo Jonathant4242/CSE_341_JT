@@ -1,10 +1,5 @@
-// Purpose: Generate Swagger JSON file for API documentation.
 const swaggerAutogen = require('swagger-autogen')();
 
-// Load environment variables
-const isProduction = process.env.NODE_ENV === 'production';
-
-// Swagger JSON configuration
 const doc = {
     info: {
         title: 'Contacts API',
@@ -14,13 +9,11 @@ const doc = {
             email: "jonathan.trok@outlook.com"
         }
     },
-    // Host (optional)
-    // host: "localhost:8080",
-    // Base path (optional)
-    // basePath: "/",
-    host: isProduction ? "cse-341-jt.onrender.com" : "localhost:8080", 
-    basePath: "/", 
-    schemes: isProduction ? ['https'] : ['http'], 
+    host: process.env.NODE_ENV === "production" 
+        ? "cse-341-jt.onrender.com" 
+        : "localhost:8080",  
+    basePath: "/",  
+    schemes: process.env.NODE_ENV === "production" ? ["https"] : ["http"],  
     servers: [
         {
             url: "https://cse-341-jt.onrender.com",
@@ -38,11 +31,18 @@ const doc = {
         }
     ]
 };
-// Output file
-const outputFile = './swagger.json';
-const endpointsFiles = ['./server.js', './routes/contacts.js']; 
 
-// Generate Swagger JSON
+// Output file
+const outputFile = "./swagger.json";
+const endpointsFiles = ["./server.js", "./routes/contacts.js"];  
+
+// ✅ DELETE existing Swagger JSON before regenerating
+const fs = require("fs");
+if (fs.existsSync(outputFile)) {
+    fs.unlinkSync(outputFile);  // 🔥 No more `rm -f swagger.json`
+}
+
+// ✅ Generate Swagger JSON
 swaggerAutogen(outputFile, endpointsFiles, doc).then(() => {
-    require('./server.js'); // Start server AFTER generating Swagger
+    require("./server.js"); // Start the server AFTER generating Swagger
 });
