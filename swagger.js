@@ -11,12 +11,12 @@ const doc = {
     },
     servers: [
         {
-            url: "http://localhost:8080",
-            description: "Local Development Server"
-        },
-        {
             url: "https://cse-341-jt.onrender.com",
             description: "Production Server (Render Deployment)"
+        },
+        {
+            url: "http://localhost:8080",
+            description: "Local Development Server"
         }
     ],
     tags: [
@@ -25,13 +25,15 @@ const doc = {
             description: "Endpoints related to contacts"
         }
     ],
-    schemes: ['http', 'https']
+    schemes: ['https', 'http']
 };
 
 const outputFile = './swagger.json';
-const endpointsFiles = ['./server.js', './routes/contacts.js']; // This is the file that contains the API endpoints
+const endpointsFiles = ['./server.js', './routes/contacts.js']; // API endpoint files
 
-// ✅ Pass the `doc` object into `swaggerAutogen`
+// Generate Swagger JSON
+// Start server AFTER generating Swagger
+// This is a workaround to ensure that the Swagger JSON is generated before the server starts
 swaggerAutogen(outputFile, endpointsFiles, doc).then(() => {
-    require('./server.js'); // Start the server AFTER generating Swagger
+    require('./server.js'); // Start server AFTER generating Swagger
 });
