@@ -9,15 +9,15 @@
     },
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
+  "host": "localhost:8080",
   "servers": [
-    {
-      "url": "https://cse-341-jt.onrender.com",
-      "description": "Production Server (Render Deployment)"
-    },
     {
       "url": "http://localhost:8080",
       "description": "Local Development Server"
+    },
+    {
+      "url": "https://cse-341-jt.onrender.com",
+      "description": "Production Server (Render Deployment)"
     }
   ],
   "basePath": "/",
@@ -28,7 +28,6 @@
     }
   ],
   "schemes": [
-    "https",
     "http"
   ],
   "paths": {
