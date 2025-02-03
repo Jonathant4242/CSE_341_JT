@@ -113,10 +113,19 @@ router.get('/:id', async (req, res) => {
  *         description: Validation error
  */
 router.post('/', async (req, res) => {
-    const { firstName, lastName, email, phone, favoriteColor, birthday, tags } = req.body;
+    let { firstName, lastName, email, phone, favoriteColor, birthday, tags } = req.body;
 
     if (!firstName || !lastName || !email) {
         return res.status(400).json({ error: 'First name, last name, and email are required' });
+    }
+
+    // Convert birthday to a Date object if provided
+    if (birthday) {
+        const parsedDate = Date.parse(birthday);
+        if (isNaN(parsedDate)) {
+            return res.status(400).json({ error: 'Invalid date format for birthday. Use YYYY-MM-DD.' });
+        }
+        birthday = new Date(parsedDate);
     }
 
     try {
