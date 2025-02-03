@@ -5,12 +5,13 @@ const fs = require('fs');
 const swaggerUi = require('swagger-ui-express');
 const contactsRoutes = require('./routes/contacts');
 const cors = require('cors'); // Import CORS middleware
+const path = require('path'); // Import path module for static files
 
 const app = express();
 const PORT = process.env.PORT || 8080;
 
 // Enable CORS for all requests
-app.use(cors());  
+app.use(cors());
 
 // Middleware to parse JSON requests
 app.use(express.json());
@@ -23,6 +24,9 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // API Routes
 app.use('/contacts', contactsRoutes);
+
+// Serve Static Frontend Files
+app.use(express.static(path.join(__dirname, 'frontend')));
 
 // Root Route
 app.get('/', (req, res) => {
@@ -38,6 +42,11 @@ app.get('/api/data', (req, res) => {
             { id: 2, name: "Item 2" }
         ]
     });
+});
+
+// Move this to the end to prevent it from overriding API routes
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
 });
 
 // MongoDB Connection and Start Server 
