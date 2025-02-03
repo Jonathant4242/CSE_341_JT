@@ -24,11 +24,6 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // API Routes
 app.use('/contacts', contactsRoutes);
 
-// MongoDB Connection
-mongoose.connect(process.env.MONGO_URI)
-    .then(() => console.log('Connected to MongoDB'))
-    .catch(err => console.error('MongoDB connection error:', err));
-
 // Root Route
 app.get('/', (req, res) => {
     res.send('Hello, John!');
@@ -45,7 +40,14 @@ app.get('/api/data', (req, res) => {
     });
 });
 
-// Start the Server
-app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
-});
+// MongoDB Connection and Start Server 
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => {
+        console.log('Connected to MongoDB');
+        app.listen(PORT, () => {
+            console.log(`Server running at http://localhost:${PORT}`);
+        });
+    })
+    .catch(err => {
+        console.error('MongoDB connection error:', err);
+    });
